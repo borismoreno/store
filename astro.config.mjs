@@ -12,7 +12,9 @@ import db from '@astrojs/db';
 
 // https://astro.build/config
 export default defineConfig({
-    integrations: [tailwind(), auth(), react(), db()],
+    integrations: [tailwind({
+        applyBaseStyles: false,
+    }), auth(), react(), db()],
     output: 'server',
     adapter: netlify()
 });
