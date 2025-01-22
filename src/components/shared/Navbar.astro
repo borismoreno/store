@@ -6,48 +6,76 @@ const { isLoggedIn, isAdmin } = Astro.locals;
 
 <!-- component -->
 <nav
-    class="flex justify-between px-20 py-10 items-center fixed top-0 w-full z-10 h-20"
+    class="flex justify-between px-5 md:px-20 py-10 items-center fixed top-0 w-full z-10 h-20"
     style="background-color: #F9F9F9;"
 >
     <h1 class="text-xl text-gray-800 font-bold">
         <a href="/">AstroStore</a>
     </h1>
-    <div class="flex items-center">
-        <ul class="flex items-center space-x-6">
-            <CartCounter client:load transition:persist />
-            <li class="font-semibold text-gray-700">
-                <a href="/">Home</a>
-            </li>
-            {
-                isAdmin && (
-                    <li class="font-semibold text-gray-700">
-                        <a href="/admin/dashboard">Admin</a>
-                    </li>
-                )
-            }
+    <div class="flex space-x-6 items-center">
+        <CartCounter client:load transition:persist />
+        <div class="md:hidden block">
+            <button class="lg:hidden" id="btn-menu">
+                <svg
+                    class="w-7 h-7"
+                    fill="#000"
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path
+                        fill-rule="evenodd"
+                        d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                        clip-rule="evenodd"></path>
+                </svg>
+            </button>
+        </div>
+        <div class="items-center hidden md:flex">
+            <ul class="flex items-center space-x-6">
+                <li class="font-semibold text-gray-700">
+                    <a href="/">Home</a>
+                </li>
+                {
+                    isAdmin && (
+                        <li class="font-semibold text-gray-700">
+                            <a href="/admin/dashboard">Admin</a>
+                        </li>
+                    )
+                }
 
-            {
-                !isLoggedIn ? (
-                    <li class="font-semibold text-gray-700">
-                        <a href="/login">Ingresar</a>
-                    </li>
-                ) : (
-                    <li id="logout" class="font-semibold text-gray-700">
-                        <a href="#">Salir</a>
-                    </li>
-                )
-            }
-        </ul>
+                {
+                    !isLoggedIn ? (
+                        <li class="font-semibold text-gray-700">
+                            <a href="/login">Ingresar</a>
+                        </li>
+                    ) : (
+                        <li id="logout" class="font-semibold text-gray-700">
+                            <a href="#">Salir</a>
+                        </li>
+                    )
+                }
+            </ul>
+        </div>
     </div>
 </nav>
 
 <script>
     const { signOut } = await import("auth-astro/client");
 
-    const logoutElem = document.querySelector("#logout") as HTMLLIElement;
+    document.addEventListener("astro:page-load", () => {
+        const logoutElem = document.querySelector("#logout") as HTMLLIElement;
 
-    logoutElem?.addEventListener("click", async () => {
-        await signOut();
-        window.location.href = "/";
+        logoutElem?.addEventListener("click", async () => {
+            await signOut();
+            window.location.href = "/";
+        });
+
+        const btnMenu = document.querySelector(
+            "#btn-menu",
+        ) as HTMLButtonElement;
+
+        btnMenu?.addEventListener("click", () => {
+            console.log("click");
+            btnMenu.remove();
+        });
     });
 </script>
