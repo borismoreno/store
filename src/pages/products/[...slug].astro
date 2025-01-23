@@ -45,12 +45,13 @@ const image = images[0].image.startsWith("http")
 
             <h3 class="mt-5">Cantidad</h3>
             <div>
-                <button class="btn-quantity">-</button>
+                <button id="btn-decrement" class="btn-quantity">-</button>
                 <input type="number" min="1" value="1" />
-                <button class="btn-quantity">+</button>
+                <button id="btn-increment" class="btn-quantity">+</button>
             </div>
 
             <button
+                id="btn-add-to-cart"
                 class="mt-5 bg-blue-500 text-white p-3 w-full disabled:bg-gray-500"
                 >Añadir al carrito</button
             >
@@ -89,8 +90,9 @@ const image = images[0].image.startsWith("http")
 
         let quantity = 1;
 
-        const [menuButton, decrementButton, incrementButton, addToCartButton] =
-            document.querySelectorAll("button");
+        const decrementButton = document.getElementById("btn-decrement");
+        const incrementButton = document.getElementById("btn-increment");
+        const addToCartButton = document.getElementById("btn-add-to-cart");
 
         if (!incrementButton || !quantityInput) return;
 
