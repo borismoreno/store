@@ -90,9 +90,15 @@ const image = images[0].image.startsWith("http")
 
         let quantity = 1;
 
-        const decrementButton = document.getElementById("btn-decrement");
-        const incrementButton = document.getElementById("btn-increment");
-        const addToCartButton = document.getElementById("btn-add-to-cart");
+        const decrementButton = document.getElementById(
+            "btn-decrement",
+        ) as HTMLButtonElement;
+        const incrementButton = document.getElementById(
+            "btn-increment",
+        ) as HTMLButtonElement;
+        const addToCartButton = document.getElementById(
+            "btn-add-to-cart",
+        ) as HTMLButtonElement;
 
         if (!incrementButton || !quantityInput) return;
 
@@ -101,12 +107,12 @@ const image = images[0].image.startsWith("http")
             quantityInput.value = quantity.toString();
         });
 
-        decrementButton.addEventListener("click", () => {
+        decrementButton?.addEventListener("click", () => {
             quantity = Math.max(quantity - 1, 1);
             quantityInput.value = quantity.toString();
         });
 
-        addToCartButton.addEventListener("click", async () => {
+        addToCartButton?.addEventListener("click", async () => {
             const size = document.querySelector(".selected-size")?.textContent;
             if (!size) {
                 return alert("Seleccione una talla");
